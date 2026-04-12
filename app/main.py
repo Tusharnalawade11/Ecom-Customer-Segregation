@@ -3,7 +3,7 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
-from utils.helper import preprocess, get_risk
+from utils.helper import get_risk
 from utils.config import load_api_key
 
 app = FastAPI(title="Customer Segmentation API")
@@ -75,11 +75,12 @@ def recommend(data: CustomerInput):
 
     print(f"Using GROQ API: \n\nRecommendation: {recommendation}")
 
-    recommendation_insights = recommendation.split("\n\n")[1].split("\n")[:]
+    if recommendation is not None:
+        recommendation_insights = recommendation.split("\n\n")[1].split("\n")[:]
 
     return {
         "Segment": segment,
         "RiskProfile": risk,
-        "Recommendation": recommendation_insights,
+        "Recommendation": recommendation_insights or ["No recommendations available."],
         "Detailed Recommendation": recommendation
     }

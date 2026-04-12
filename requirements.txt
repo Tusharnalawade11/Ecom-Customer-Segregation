@@ -1,0 +1,11 @@
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+ipykernel
+pydantic
+python-dotenv
+fastapi
+uvicorn
+groq
